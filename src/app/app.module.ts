@@ -16,8 +16,13 @@ import {AppRoutingModule} from './app-routing.module';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import {RecipeService} from './recipes/recipe.service';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {RecipesResolverService} from './recipes/recipes-resolver.service';
+import {AuthComponent} from './auth/auth.component';
+import {AuthService} from './auth/auth.service';
+import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.component';
+import {AuthInterceptorService} from './auth/auth-interceptor.service';
+import {AuthGuard} from './auth/auth.guard';
 
 @NgModule({
   declarations: [
@@ -31,7 +36,9 @@ import {RecipesResolverService} from './recipes/recipes-resolver.service';
     ShoppingEditComponent,
     DropdownDirective,
     RecipeStartComponent,
-    RecipeEditComponent
+    RecipeEditComponent,
+    AuthComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +47,8 @@ import {RecipesResolverService} from './recipes/recipes-resolver.service';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [ShoppingListService,RecipeService,RecipesResolverService],
+  providers: [ShoppingListService,RecipeService,RecipesResolverService,AuthService,
+    {provide: HTTP_INTERCEPTORS,useClass: AuthInterceptorService,multi:true},AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
