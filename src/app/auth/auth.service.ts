@@ -117,7 +117,7 @@ export class AuthService{
 
 
       }
-      return throwError(error +errorMessage);
+      return throwError(errorMessage);
 
   }
 }

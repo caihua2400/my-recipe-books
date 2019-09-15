@@ -44,8 +44,15 @@ export class AuthComponent{
     },error=>{
       console.log(error);
       this.error= error;
+      //this.showErrorAlert();
       this.isLoading=false;
     });
     authForm.reset();
   }
+
+  OnCloseErrorAlert() {
+    this.error=null;
+  }
+
+
 }
